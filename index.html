@@ -5,12 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <main>
         <div id="app">
-            
+            <h2>Userdata for my app</h2>
+            <hr>
+            <article>
+                <h4 class="hidden"></h4>
+                <h5>sumthin</h5>
+                <p>lorem</p>
+                <p>lorem 2</p>
+            </article>
+            <activeusers name="Helen" role="just a normal human" @shoutup="calledOnParent">
+                <h4>Active User Data:</h4>
+            </activeusers>
+            <activeusers name="second human" role="second role" >
+                    <h4>Active User Data:</h4>
+                </activeusers>
         </div>
     </main>
+
+    <!--TEMPLATES +TEMPORARY+ -->
+    <template id="userstemplate">
+        <div>
+            <slot></slot>
+            <p>{{ name }}</p>
+            <p>{{ role }}</p>
+            <button v-on:click="loggedFromChild">Run method from this component</button>
+            <button v-on:click="passEvent">Run a method from the main VM</button>
+            <hr>
+        </div>
+    </template>
+
+    <script src="js/main.js"></script>
 </body>
 </html>
