@@ -10,7 +10,35 @@
     }
 
     const UsersPageComponent = {
-        template : "<h2>This is the users page</h2>"
+        props: ['id'], //this.id
+        template : "#user-list",
+
+        //isolate all conponent data
+        data: function(){
+            return {
+                users: []
+            }
+        },
+
+        created: function(){
+            console.log('user component created');
+            console.log(this.id);
+
+            this.fetchUserData(this.id);
+        },
+
+        methods: {
+            fetchUserData(users){
+                let url = `./includes/index.php?users=${this.id}`;
+
+                fetch(url)
+                .then(res=>res.json())
+                .then(data=>this.users = data)
+                .catch(function(error){
+                    Console.error(error);
+                });
+            }
+        }
     }
 
     const ErrorPageComponent = {
@@ -20,8 +48,8 @@
     const routes = [
         {path: '/', name: 'home', component: HomePageComponent },
         {path: '/contact', name: 'contact', component: ContactPageComponent },
-        {path: '/users', name: 'users', component: UsersPageComponent },
-        {path: '/%', name: 'error', component: ErrorPageComponent},
+        {path: '/users/:id', name: 'users', component: UsersPageComponent, props: true },
+        {path: '/*', name: 'error', component: ErrorPageComponent},
     ]
 
     const router = new VueRouter({
@@ -54,6 +82,7 @@
             'homepagecomponent' : HomePageComponent,
             'contactpagecomponent' : ContactPageComponent,
             'userspagecomponent' : UsersPageComponent,
+            'errorpagecomponent' : ErrorPageComponent,
         },
 
         router: router
